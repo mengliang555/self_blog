@@ -5,8 +5,6 @@ import (
 	"self_blog/src/common/common_struct"
 )
 
-const DefaultRouter = "default_map"
-
 type routerMap struct {
 	innerGroupMap map[string]*GroupRouterMap
 }
@@ -37,14 +35,12 @@ func (r *routerMap) AddGroupRouter(group string, middleware []gin.HandlerFunc, h
 		return r
 	}
 	if _, ok := r.innerGroupMap[group]; !ok {
-		r.innerGroupMap[group].Middleware = make([]gin.HandlerFunc, 0)
-		r.innerGroupMap[group].Handler = make([]*common_struct.RequestHandler, 0)
+		r.innerGroupMap[group] = &GroupRouterMap{
+			Handler:    make([]*common_struct.RequestHandler, 0),
+			Middleware: make([]gin.HandlerFunc, 0),
+		}
 	}
 	r.innerGroupMap[group].Middleware = append(r.innerGroupMap[group].Middleware, middleware...)
 	r.innerGroupMap[group].Handler = append(r.innerGroupMap[group].Handler, handler...)
 	return r
-}
-
-func (r *routerMap) AddDefaultRouter(middleware []gin.HandlerFunc, handler []*common_struct.RequestHandler) *routerMap {
-	return r.AddGroupRouter(DefaultRouter, middleware, handler)
 }

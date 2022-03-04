@@ -1,8 +1,10 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
+	"net/http"
 	"self_blog/src/common/common_struct"
-	"self_blog/src/common/constant/variable"
+	"self_blog/src/common/constant/base_constant"
 )
 
 // user behave
@@ -15,7 +17,7 @@ const (
 )
 
 var loginRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.POST,
+	RequestMethod: base_constant.POST,
 	Group:         GroupForUserLogin,
 	Path:          login,
 	// todo 使用handler 下的method包相关方法
@@ -23,7 +25,7 @@ var loginRouter = &common_struct.RequestHandler{
 }
 
 var signOutRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.POST,
+	RequestMethod: base_constant.POST,
 	Group:         GroupForUserLogin,
 	Path:          signOut,
 	// todo 使用handler 下的method包相关方法
@@ -31,7 +33,7 @@ var signOutRouter = &common_struct.RequestHandler{
 }
 
 var registerRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.POST,
+	RequestMethod: base_constant.POST,
 	Group:         GroupForUserLogin,
 	Path:          register,
 	// todo 使用handler 下的method包相关方法
@@ -49,7 +51,7 @@ const (
 )
 
 var createBlogRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.POST,
+	RequestMethod: base_constant.POST,
 	Group:         GroupForUserForSelfBlog,
 	Path:          createBlog,
 	// todo 使用handler 下的method包相关方法
@@ -57,7 +59,7 @@ var createBlogRouter = &common_struct.RequestHandler{
 }
 
 var updateBlogRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.PUT,
+	RequestMethod: base_constant.PUT,
 	Group:         GroupForUserForSelfBlog,
 	Path:          updateBlog,
 	// todo 使用handler 下的method包相关方法
@@ -65,15 +67,17 @@ var updateBlogRouter = &common_struct.RequestHandler{
 }
 
 var getSelfBlogListRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.GET,
+	RequestMethod: base_constant.GET,
 	Group:         GroupForUserForSelfBlog,
 	Path:          getSelfBlogList,
 	// todo 使用handler 下的method包相关方法
-	Handler: nil,
+	Handler: func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, common_struct.EmptyResponseStruct)
+	},
 }
 
 var getPartnerBlogListRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.GET,
+	RequestMethod: base_constant.GET,
 	Group:         GroupForUserForSelfBlog,
 	Path:          getPartnerBlogList,
 	// todo 使用handler 下的method包相关方法
@@ -81,20 +85,9 @@ var getPartnerBlogListRouter = &common_struct.RequestHandler{
 }
 
 var getBlogDetailByIdRouter = &common_struct.RequestHandler{
-	RequestMethod: variable.GET,
+	RequestMethod: base_constant.GET,
 	Group:         GroupForUserForSelfBlog,
 	Path:          getBlogDetailById,
 	// todo 使用handler 下的method包相关方法
 	Handler: nil,
-}
-
-//------------------------------------------------------------------------------------------------------------------nil
-func init() {
-	variable.RefRouterMap().AddGroupRouter(GroupForUserLogin, nil, []*common_struct.RequestHandler{
-		loginRouter, signOutRouter, registerRouter,
-	})
-
-	variable.RefRouterMap().AddGroupRouter(GroupForUserForSelfBlog, nil, []*common_struct.RequestHandler{
-		createBlogRouter, updateBlogRouter, getSelfBlogListRouter, getPartnerBlogListRouter, getBlogDetailByIdRouter,
-	})
 }

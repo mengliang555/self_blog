@@ -1,4 +1,4 @@
-package variable
+package base_constant
 
 import "net/http"
 
