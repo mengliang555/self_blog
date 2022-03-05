@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"self_blog/src/boot"
 	"self_blog/src/common/constant/constant_error"
 )
 
@@ -17,7 +16,6 @@ func RecoverThePanicError() gin.HandlerFunc {
 				}
 			}
 		}()
-		boot.RefLogger().Info(ctx, "has password RecoverThePanicError")
 		ctx.Next()
 	}
 }

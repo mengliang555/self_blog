@@ -19,11 +19,11 @@ func loadAllRouter() {
 
 func init() {
 	variable.RefRouterMap().AddGroupRouter(GroupForUserLogin, nil, []*common_struct.RequestHandler{
-		loginRouter, signOutRouter, registerRouter,
+		loginRouter.Build(), signOutRouter.Build(), registerRouter.Build(),
 	})
 
 	variable.RefRouterMap().AddGroupRouter(GroupForUserForSelfBlog, nil, []*common_struct.RequestHandler{
-		createBlogRouter, updateBlogRouter, getSelfBlogListRouter, getPartnerBlogListRouter, getBlogDetailByIdRouter,
+		createBlogRouter.Build(), updateBlogRouter.Build(), getSelfBlogListRouter.Build(), getPartnerBlogListRouter.Build(), getBlogDetailByIdRouter.Build(),
 	})
 
 	loadAllRouter()

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"self_blog/src/common/common_struct"
 	"self_blog/src/common/constant/base_constant"
+	"self_blog/src/common/constant/variable"
 )
 
 // user behave
@@ -70,6 +71,7 @@ var getSelfBlogListRouter = &common_struct.RequestHandler{
 	RequestMethod: base_constant.GET,
 	Group:         GroupForUserForSelfBlog,
 	Path:          getSelfBlogList,
+	Param:         new(variable.Login),
 	// todo 使用handler 下的method包相关方法
 	Handler: func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, common_struct.EmptyResponseStruct)

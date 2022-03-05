@@ -7,6 +7,8 @@ import (
 )
 
 type Logger interface {
+	SimpleInfo(msg string)
+	SimpleInfoWithFormat(msg string, param ...interface{})
 	Info(ctx context.Context, msg string)
 	InfoWithFormat(ctx context.Context, msg string, param ...interface{})
 	Warn(ctx context.Context, msg string)
@@ -25,6 +27,14 @@ func injectLogger(all Logger) {
 }
 
 type testLog struct {
+}
+
+func (t *testLog) SimpleInfo(msg string) {
+	fmt.Printf("[%s]%s:%s\n", getCurrentTime(), "Initiated", msg)
+}
+
+func (t *testLog) SimpleInfoWithFormat(msg string, param ...interface{}) {
+	fmt.Printf("[%s]%s:%s\n", getCurrentTime(), "Initiated", msg)
 }
 
 func getCurrentTime() string {

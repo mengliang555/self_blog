@@ -1,1 +1,1 @@
-curl -i http://localhost:8080/group_for_user_for_self_blog/get_self_blog_list
+curl -i http://localhost:8080/group_for_user_for_self_blog/get_self_blog_list -X get -d "{\"name\":\"hello world\",\"password\":\"123\""}"
