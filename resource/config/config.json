@@ -1,0 +1,13 @@
+{
+  "rate_limit": {
+    "bucket_size": 100,
+    "rate_for_token": 100
+  },
+  "mysql": {
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "121212",
+    "database": "default"
+  }
+}

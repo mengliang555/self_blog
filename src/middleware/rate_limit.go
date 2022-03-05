@@ -9,11 +9,6 @@ import (
 	"sync"
 )
 
-const (
-	bucketSize   = 10
-	rateForToken = 10
-)
-
 var urlMap = make(map[string]*rate.Limiter)
 var urlMapLock = sync.RWMutex{}
 
@@ -22,7 +17,7 @@ func RateLimit() gin.HandlerFunc {
 		// todo 限流配置支持动态调整
 		if _, ok := urlMap[ctx.Request.URL.Path]; !ok {
 			urlMapLock.Lock()
-			urlMap[ctx.Request.URL.Path] = rate.NewLimiter(rateForToken, bucketSize)
+			urlMap[ctx.Request.URL.Path] = rate.NewLimiter(rate.Limit(boot.RefConfig().RateLimitConfig.RateForToken), boot.RefConfig().RateLimitConfig.BucketSize)
 			urlMapLock.Unlock()
 		}
 		if !urlMap[ctx.Request.URL.Path].Allow() {
